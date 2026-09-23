@@ -1,38 +1,40 @@
-# Moufu Integration Hub
+# Moufu (毛布)
 
 <p align="center">
-  <img src="./icon.webp" alt="Moufu Icon" width="180" height="180" />
+  <img src="./icon.webp" alt="Moufu Icon" width="160" height="160" />
 </p>
 
 <p align="center">
-  <b>Adobe Dynamic Link を究極まで発展させた、汎用的なリアルタイム統合ハブ</b>
+  アプリケーション間を動的リンクでつなぐ汎用 Integration Hub（開発中）
 </p>
 
 ---
 
 ## 概要
 
-Moufu は、単なるファイル管理や素材ブラウザーではありません。
-異なるクリエイティブアプリケーション間で編集データ・状態・依存関係をリアルタイムに共有し、**複数のアプリケーションを一つの制作環境のように連携させる** ための Integration Hub です。
+Moufu（毛布）は、異なる制作アプリケーション間で編集データ・状態・依存関係を共有し、複数アプリを一つの制作環境のように連携させるためのハブです。
 
-### 主な特徴
-- **未保存の動的リンク (Live Link)**: 保存操作を行うことなく、ドラッグやスライダー等の未保存編集を即座に連携先アプリへプレビュー通知。
-- **60fps イベント合流・流量制御 (Event Coalescing)**: 高周波の編集操作を自動集約し、受信側の遅延・パンクを防止。
-- **共有メモリ (Shared Memory) ゼロコピー転送**: 4K動画フレームや高解像度ラスタライズ画像をCPU・帯域負荷なく共有可能。
-- **リンクの永続化と自動復元 (Persistent Links & Re-binding)**: アプリ終了や再起動時にもリンク依存関係を自動検出・復元。
-- **連携能力ネゴシエーション (Capability Negotiation)**: 接続アプリごとの能力（Live Link, Push Edits, 差分同期等）をハンドシェイク時に宣言・検出。
-- **コントロールセンター GUI (egui)**: 接続中のアプリ、アクティブリンク、同期バージョン、リアルタイムアクティビティを監視。
+ファイル管理ではなく、アプリ同士の編集体験をつなぐ動的リンクを目的としています。
+
+### 目標とする連携先
+- Blender
+- Kdenlive
+- Hirari
+- Amata
+- Kagari
+- Nagisa
 
 ---
 
-## 構成モジュール
+## 現在の状況 (WIP / MVP)
 
-- `crates/moufu-protocol`: 通信プロトコル・メッセージスキーマ・データ型定義
-- `crates/moufu-core`: 依存関係グラフ (`LinkGraph`)・セッション管理・イベント合流・TCPサーバー
-- `crates/moufu-adapter-sdk`: 自作アプリ（Amata, Kagari, Hirari, Nagisa等）へ組み込むためのクライアントSDK
-- `crates/moufu-gui`: `egui` によるコントロールセンターGUI
-- `examples/mock-amata`: ベクターデザインツール（パブリッシャー）モック
-- `examples/mock-kagari`: ビデオ編集・コンポジション（サブスクライバー）モック
+現在は初期プロトタイプ段階です。Core/Protocol/Adapter SDK の分離設計と、Amata↔Kagari 間で未保存の編集通知を中継する最小構成の検証を進めています。
+
+- **`crates/moufu-protocol`**: 通信メッセージ・データ型・ケイパビリティ定義
+- **`crates/moufu-core`**: リンクグラフ管理・イベント中継・常駐エンジン
+- **`crates/moufu-adapter-sdk`**: 各アプリ側へ組み込むためのクライアントSDK
+- **`crates/moufu-gui`**: 接続状況やリンク状態を確認するコントロールセンター (egui)
+- **`examples/`**: 動作検証用のモック
 
 ---
 
